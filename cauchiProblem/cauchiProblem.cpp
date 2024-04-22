@@ -45,7 +45,7 @@ int main()
         if (sumForF == NULL) {
             sumForF = k1(0) / 2 + k1(1) / 2;
             F[1] = -x0 * q + f(1) + x0 * h * h * sumForF;
-
+            
         }
         sumForF += k1(j) / 2 + k1(j - 1) / 2;
         F[j] = -x0 * q + f(j) + x0 * h * h * sumForF;
