@@ -20,10 +20,9 @@ const unsigned short limiеОfApproximation = 4;
 
 long double ApproxValue(int h);
 
-int* F = new int; // Массив для подсчёта Ф 
-int* R = new int; // Массив для подсчёта R 
+double* F = new double; // Массив для подсчёта Ф 
+double* R = new double; // Массив для подсчёта R 
 double* Y = new double; // Массив для подсчёта Y
-int* X = new int;
 
 
 //------------------------------------------------Функция мэйн начало-------------------------------------------------------------
@@ -35,44 +34,42 @@ int main()
     cin >> N; // Ввод размеров верхней границы интеграла 
 
 
-    F = new int[N]; // Массив для подсчёта Ф 
-    R = new int[N]; // Массив для подсчёта R 
+    F = new double[N]; // Массив для подсчёта Ф 
+    R = new double[N]; // Массив для подсчёта R 
     Y = new double[N]; // Массив для подсчёта Y
-    X = new int[N];
 
     //----------------------------- Нахождение Ф функции с записью в массив
+    long double sumForF = NULL;
 
-    for (j = 0; j < N; j++) {
-        if (j == 0) {
-            F[j] = -x0 * q + f(0);
-            continue;
+    for (j = 1; j < N; j++) {
+        if (sumForF == NULL) {
+            sumForF = k1(0) / 2 + k1(1) / 2;
+            F[1] = -x0 * q + f(1) + x0 * h * h * sumForF;
+
         }
-        double sumForF = 0;
-        for (i = 0; i <= j; i++) {
-            if (i == 0 || i == j)
-                sumForF += k1(j - i) / 2;
-            else
-                sumForF += k1(j - i);
-        }
+        sumForF += k1(j) / 2 + k1(j - 1) / 2;
         F[j] = -x0 * q + f(j) + x0 * h * h * sumForF;
     }
+
     //-----------------------------
 
     //----------------------------- Нахождение Ядра с записью в массив
-    for (j = 0; j < N; j++) {
 
-        if (j == 0) {
-            R[j] = -q;
+    double sumForR = 0;
+
+    R[0] = -q;
+    R[1] = h / 2 * (k1(1) + k1(0)) - q;
+
+    for (j = 2; j <= N; j++) {
+        if (sumForR == NULL) {
+            sumForR = (k1(0) / 2) + k1(1) + (k1(2) / 2);
+            R[j] = h * sumForR - q;
             continue;
         }
-        double sumForR = 0;
-        for (i = 0; i <= j; i++) {
-            if (i == 0 || i == j)
-                sumForR += k1(j - i) / 2;
-            else
-                sumForR += k1(j - i);
+        else {
+            sumForR += k1(j) / 2 + k1(j - 1) / 2;
+            R[j] = h * sumForR - q;
         }
-        R[j] = h * sumForR - q;
     }
     //-----------------------------
 
@@ -119,7 +116,7 @@ long double ApproxValue(int n)
         {
 
             if (i == 0) {
-                CloseY = R[0] * Y[0] + F[j];
+                CloseY = R[0] * Y[0] + F[n];
             }
             else {
                 for (j = 0; j < n; j++)
