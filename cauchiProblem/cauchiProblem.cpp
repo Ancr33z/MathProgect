@@ -24,13 +24,14 @@ double* F = new double; // Массив для подсчёта Ф
 double* R = new double; // Массив для подсчёта R 
 double* Y = new double; // Массив для подсчёта Y
 
+int i, N, h = 1, t, j, x0 = 0, q = 1;
+
 
 //------------------------------------------------Функция мэйн начало-------------------------------------------------------------
 int main()
 {
     setlocale(LC_ALL, "rus");
 
-    int i, N, h = 1, t, j, x0 = 0, q = 1;
     cin >> N; // Ввод размеров верхней границы интеграла 
 
 
@@ -40,6 +41,8 @@ int main()
 
     //----------------------------- Нахождение Ф функции с записью в массив
     long double sumForF = NULL;
+
+    F[0] = -x0 * q + f(0);
 
     for (j = 1; j < N; j++) {
         if (sumForF == NULL) {
@@ -87,9 +90,16 @@ int main()
     //----------------------------- Нахождение приближенного результата 
 
     cout << "Result:" << endl;
-
     for (i = 0; i < N; i++) {
-        cout << Y[i] << ' ';
+        cout << R[i] << '\n';
+    }
+    cout << '\n';
+    for (i = 0; i < N; i++) {
+        cout << F[i] << '\n';
+    }
+    cout << '\n';
+    for (i = 0; i < N; i++) {
+        cout << Y[i] << '\n';
     }
 
     system("pause");
@@ -108,15 +118,15 @@ int main()
 
 long double ApproxValue(int n)
 {
-    long double sumForYApprox = 0, CloseY;
-    int i, j;
+    long double sumForYApprox = 0, CloseY = 0;
 
     if (n == 1) {
         for (i = 0; i < limiеОfApproximation; i++)
         {
+            sumForYApprox = 0;
 
             if (i == 0) {
-                CloseY = R[0] * Y[0] + F[n];
+                CloseY = R[0] * Y[0] + F[0];
             }
             else {
                 for (j = 0; j < n; j++)
@@ -124,36 +134,37 @@ long double ApproxValue(int n)
                         sumForYApprox += (Y[0] * R[1]) / 2;
                     else if (j == n) {
                         sumForYApprox += (R[0] * CloseY) / 2;
-                        break;
                     }
-                    else
-                        sumForYApprox += Y[j - i];
-                CloseY = j * sumForYApprox + F[j];
+                    else {
+                        sumForYApprox += Y[n - j];
+                    }
+                CloseY = j * sumForYApprox + F[n];
             }
         }
     }
     else {
         for (i = 0; i < limiеОfApproximation; i++)
         {
-
+            sumForYApprox = 0;
             if (i == 0) {
                 for (j = 0; j < n; j++)
                     if (j == 0)
-                        sumForYApprox += (Y[n - j] * R[j]) / 2;
-                    else
-                        sumForYApprox += Y[j - i];
-                CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[j];
+                        sumForYApprox += (Y[n - 1] * R[j]) / 2;
+                    else{
+                        sumForYApprox += Y[n - j];
+                    }
+                CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[n];
             }
             else {
                 for (j = 0; j < n; j++)
                     if (j == 0)
-                        sumForYApprox += (Y[n - j] * R[j]) / 2;
+                        sumForYApprox += (Y[n - 1] * R[j]) / 2;
                     else if (j == n) {
                         sumForYApprox += (R[0] * CloseY) / 2;
                         break;
+                    }else {
+                        sumForYApprox += Y[n - j];
                     }
-                    else
-                        sumForYApprox += Y[j - i];
                 CloseY = j * sumForYApprox + F[j];
             }
         }
