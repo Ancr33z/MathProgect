@@ -59,7 +59,7 @@ int main()
 
     //----------------------------- Нахождение Ядра с записью в массив
 
-    double sumForR = 0;
+    long double sumForR = NULL;
 
     R[0] = -q;
     R[1] = h / 2 * (k1(1) + k1(0)) - q;
@@ -82,11 +82,8 @@ int main()
     Y[0] = F[0];
     for (j = 1; j < N; j++)
     {
-        Y[j] = ApproxValue(j) + F[j];
+         Y[j] = ApproxValue(j) + F[j];
     }
-
-
-
 
     //----------------------------- Нахождение приближенного результата 
 
@@ -155,29 +152,30 @@ long double ApproxValue(int n)
                         sumForYApprox += Y[n - j];
                     }
                 CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[n];
-                        //if (sumForYApprox == NULL) {
-                        //    sumForYApprox += (Y[0] * R[1]) / 2;
-                        //    R[j] = h * sumForYApprox - q;
-                        //    CloseY = j * sumForYApprox + F[n];
-                        //    continue;
-                        //}
-                        //else {
-                        //    sumForYApprox += k1(j) / 2 + k1(j - 1) / 2;
-                        //    R[j] = h * sumForYApprox - q;
-                        //}
+
             }
             else {
+                sumForYApprox = NULL;
+                for (j = 0; j < n; j++) {
+                    //    if (j == 0)
+                    //        sumForYApprox += (Y[n - 1] * R[j]) / 2;
+                    //    else if (j == n) {
+                    //        sumForYApprox += (R[0] * CloseY) / 2;
+                    //        break;
+                    //    }else {
+                    //        sumForYApprox += Y[n - j];
+                    //    }
+                    //CloseY = j * sumForYApprox + F[j];
 
-                for (j = 0; j < n; j++)
-                    if (j == 0)
-                        sumForYApprox += (Y[n - 1] * R[j]) / 2;
-                    else if (j == n) {
-                        sumForYApprox += (R[0] * CloseY) / 2;
-                        break;
-                    }else {
-                        sumForYApprox += Y[n - j];
+                    if (sumForYApprox == NULL) {
+                        sumForYApprox += ((Y[n - 1] * R[0]) / 2 + (Y[0] * R[1]) / 2 );
+                        CloseY = j * sumForYApprox + F[n];
                     }
-                CloseY = j * sumForYApprox + F[j];
+                    else {
+                        sumForYApprox += ((Y[n - j] * R[j - 1]) / 2 + (Y[n - j - 1] * R[j]) / 2 );
+                        CloseY = j * sumForYApprox + F[n];
+                    }
+                }
             }
         }
     }
