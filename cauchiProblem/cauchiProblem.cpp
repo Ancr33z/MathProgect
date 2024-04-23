@@ -155,8 +155,19 @@ long double ApproxValue(int n)
                         sumForYApprox += Y[n - j];
                     }
                 CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[n];
+                        //if (sumForYApprox == NULL) {
+                        //    sumForYApprox += (Y[0] * R[1]) / 2;
+                        //    R[j] = h * sumForYApprox - q;
+                        //    CloseY = j * sumForYApprox + F[n];
+                        //    continue;
+                        //}
+                        //else {
+                        //    sumForYApprox += k1(j) / 2 + k1(j - 1) / 2;
+                        //    R[j] = h * sumForYApprox - q;
+                        //}
             }
             else {
+
                 for (j = 0; j < n; j++)
                     if (j == 0)
                         sumForYApprox += (Y[n - 1] * R[j]) / 2;
