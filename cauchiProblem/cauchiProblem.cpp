@@ -88,16 +88,16 @@ int main()
     //----------------------------- Нахождение приближенного результата 
 
     cout << "Result:" << endl;
-    for (i = 0; i < N; i++) {
-        cout << R[i] << '\n';
-    }
+    //for (i = 0; i < N; i++) {
+    //    cout << R[i] << '\n';
+    //}
+    //cout << '\n';
+    //for (i = 0; i < N; i++) {
+    //    cout << F[i] << '\n';
+    //}
     cout << '\n';
     for (i = 0; i < N; i++) {
-        cout << F[i] << '\n';
-    }
-    cout << '\n';
-    for (i = 0; i < N; i++) {
-        cout << Y[i] << '\n';
+        printf("%.7f\n", Y[i]);
     }
 
     system("pause");
@@ -130,13 +130,15 @@ long double ApproxValue(int n)
                 for (j = 0; j < n; j++)
                     if (j == 0)
                         sumForYApprox += (Y[0] * R[1]) / 2;
-                    else if (j == n) {
-                        sumForYApprox += (R[0] * CloseY) / 2;
+                    else if (j == n - 1) {  // это условние не выполнено ни разу 
+                        sumForYApprox += (R[1] * CloseY) / 2;
                     }
                     else {
                         sumForYApprox += Y[n - j];
                     }
                 CloseY = j * sumForYApprox + F[n];
+                // CloseY работает неправильно потому что насчитывает себя рекурсивно из
+                // за чего нужно добавить новую переменную и присваивать ей значение предыдущей функции
             }
         }
     }
@@ -152,11 +154,13 @@ long double ApproxValue(int n)
                         sumForYApprox += Y[n - j];
                     }
                 CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[n];
+                //cout << F[n] << '\n';
 
             }
             else {
                 sumForYApprox = NULL;
                 for (j = 0; j < n; j++) {
+
                     //    if (j == 0)
                     //        sumForYApprox += (Y[n - 1] * R[j]) / 2;
                     //    else if (j == n) {
@@ -168,7 +172,7 @@ long double ApproxValue(int n)
                     //CloseY = j * sumForYApprox + F[j];
 
                     if (sumForYApprox == NULL) {
-                        sumForYApprox += ((Y[n - 1] * R[0]) / 2 + (Y[0] * R[1]) / 2 );
+                        sumForYApprox += ((Y[1] * R[0]) / 2 + (Y[0] * R[1]) / 2 );
                         CloseY = j * sumForYApprox + F[n];
                     }
                     else {
