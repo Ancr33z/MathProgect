@@ -83,6 +83,7 @@ int main()
     for (j = 1; j < N; j++)
     {
          Y[j] = ApproxValue(j) + F[j];
+         cout << '\n' << F[j] << ' ';
     }
 
     //----------------------------- Нахождение приближенного результата 
@@ -130,9 +131,9 @@ long double ApproxValue(int n)
                 for (j = 0; j < n; j++)
                     if (j == 0)
                         sumForYApprox += (Y[0] * R[1]) / 2;
-                    else if (j == n - 1) {  // это условние не выполнено ни разу 
-                        sumForYApprox += (R[1] * CloseY) / 2;
-                    }
+                    //else if (j == n - 1) {  // это условние не выполнено ни разу 
+                    //    sumForYApprox += (R[1] * CloseY) / 2;
+                    //}
                     else {
                         sumForYApprox += Y[n - j];
                     }
@@ -154,7 +155,7 @@ long double ApproxValue(int n)
                         sumForYApprox += Y[n - j];
                     }
                 CloseY = j * sumForYApprox + n * R[1] * Y[n - j] + F[n];
-                //cout << F[n] << '\n';
+
 
             }
             else {
@@ -173,15 +174,15 @@ long double ApproxValue(int n)
 
                     if (sumForYApprox == NULL) {
                         sumForYApprox += ((Y[1] * R[0]) / 2 + (Y[0] * R[1]) / 2 );
-                        CloseY = j * sumForYApprox + F[n];
                     }
                     else {
                         sumForYApprox += ((Y[n - j] * R[j - 1]) / 2 + (Y[n - j - 1] * R[j]) / 2 );
-                        CloseY = j * sumForYApprox + F[n];
                     }
                 }
+                CloseY = j * sumForYApprox + F[n];
             }
         }
     }
+    cout << CloseY << '\n';
     return CloseY;
 };
