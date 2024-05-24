@@ -1,4 +1,4 @@
-﻿Сборка начата 24.04.2024 12:06:58.
+﻿Сборка начата 18.05.2024 18:25:23.
 Уровень детализации журнала: Normal.     1>Проект "D:\education\raboti\Pobo4ki\Math\cauchiProblem\cauchiProblem\cauchiProblem.vcxproj" в узле 2 (целевые объекты Build).
      1>InitializeBuildStatus:
          Создание "x64\Debug\cauchiProblem.tlog\unsuccessfulbuild", так как было задано "AlwaysCreate".
@@ -18,4 +18,4 @@
     Предупреждений: 0
     Ошибок: 0
 
-Прошло времени 00:00:00.75
+Прошло времени 00:00:00.51
