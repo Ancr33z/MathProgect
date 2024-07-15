@@ -1,5 +1,1 @@
-Где Алина?
-Список конференций:
-1. ?
-2. ?
-3. ?..
+Math prog wich realise Cauchy problem
